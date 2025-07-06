@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: config-service
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/Rezraille/config-repo.git
+          default-label: master
+          skipSslValidation: true #SSL certificate can be disabled
+server:
+  port: 8888
+  servlet:
+    context-path: /config
