@@ -11,6 +11,7 @@
     <groupId>ru.aston</groupId>
     <artifactId>eureka-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>eureka-service</name>
     <description>eureka-service</description>
     <url/>
@@ -61,6 +62,12 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
             <version>4.3.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+            <version>3.5.3</version>
         </dependency>
     </dependencies>
     <dependencyManagement>
