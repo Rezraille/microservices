@@ -1,0 +1,49 @@
+version: '2'
+services:
+  kafka-broker-users:
+    image: bitnami/kafka:4.0.0-debian-12-r7
+    hostname: kafka-broker-1
+    ports:
+      - "19092:19092" #внешнее
+      - "9092:9092" #внутреннее
+      - "9093:9093"    # Контроллерный порт для KRaft
+    environment:
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+      KAFKA_ENABLE_KRAFT: "yes"  # Включаем KRaft
+      KAFKA_CFG_NODE_ID: 1       # ID
+      KAFKA_CFG_PROCESS_ROLES: "broker,controller"  # Роли ноды
+
+      # Настройки контроллера
+      KAFKA_CFG_CONTROLLER_LISTENER_NAMES: "CONTROLLER" #для связи между контроллерами
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: "1@kafka-broker-1:9093"  # Список нод-контроллеров
+
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker-1:9092,EXTERNAL://localhost:19092,CONTROLLER://kafka-broker-1:9093  #по каким адресам клиенты могут подключиться к брокеру Kafka
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT #сопоставление
+      KAFKA_CFG_LISTENERS: PLAINTEXT://:9092,EXTERNAL://:19092,CONTROLLER://:9093 # слушатели
+    
+
+
+      # Доп. настройки
+      KAFKA_CFG_INTER_BROKER_LISTENER_NAME: PLAINTEXT  #брокеры  для внутреннего обмена данными
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1 #одной копии
+      ALLOW_PLAINTEXT_LISTENER: "yes" #нешифрованного соединения
+      KAFKA_CFG_LOG_LEVEL: "DEBUG" # уровень логирования
+    volumes:
+      - kafka_data:/bitnami/kafka
+      
+  db-users:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5433:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+
+volumes:
+  db:
+    driver: local
+  kafka_data:
+    driver: local

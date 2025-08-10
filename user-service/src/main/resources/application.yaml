@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: user-service
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  default-consumes-media-type: application/json
+  default-produces-media-type:  application/json
+
+  info:
+    title: user-service Api
+    description: API CRUD операции для Users
+    version: 1.0.0
+    contact:
+      name: Мамукелашвили Натэла
+      email: akselerat96@gmail.com
+
+server:
+  port: 8181
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health

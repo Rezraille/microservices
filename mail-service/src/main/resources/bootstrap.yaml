@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: mail-service   #имя файла в Config Server
+  cloud:
+    config:
+      uri: http://localhost:8888/config/  #Адрес Config Server
+      fail-fast: true          #завершать запуск при ошибке подключения

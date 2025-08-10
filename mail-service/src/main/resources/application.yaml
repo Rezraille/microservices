@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: mail-service
+
+server:
+  port: 8282
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health
